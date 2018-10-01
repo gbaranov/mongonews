@@ -12,6 +12,14 @@
 </head>
 
 <body>
+  //////////////////
+  {{#each articles}}
+    <li>{{id}}</li>
+    <li>{{title}}</li>
+    <li>{{url}}</li>
+    <li>{{desc}}</li>
+  {{/each }}
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="/">Mongo Scraper</a>
   <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
