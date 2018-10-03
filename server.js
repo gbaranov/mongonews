@@ -31,15 +31,14 @@ app.get('/saved', function(req, res) {
 })
 
 app.post('/api', function(req, res) {
-    console.log(req.body);
-    // var data = new Article(req.body);
-    // data.save()
-    // .then(item => {
-    //     "Saved"
-    // })
-    // .catch(err => {
-    //     res.status(400).send("Unable to save");
-    // });
+    var data = new Article(req.body);
+    data.save()
+    .then(item => {
+        "Saved"
+    })
+    .catch(err => {
+        res.status(400).send("Unable to save");
+    });
 });
 
 app.listen(PORT, function() {

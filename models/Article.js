@@ -6,7 +6,7 @@ var articleSchema = new Schema({
     id: Number,
     title: String,
     url: String,
-    desc: String
+    body: String
 });
 
 var Article = mongoose.model('Article', articleSchema, 'news');
