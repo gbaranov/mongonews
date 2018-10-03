@@ -7,19 +7,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css"/>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
   <link href="https://fonts.googleapis.com/css?family=Cormorant+SC" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body>
-  //////////////////
-  {{#each articles}}
-    <li>{{id}}</li>
-    <li>{{title}}</li>
-    <li>{{url}}</li>
-    <li>{{desc}}</li>
-  {{/each }}
-
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="/">Mongo Scraper</a>
   <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
@@ -137,11 +133,12 @@
     <p>New York Times Mongo Scraper</p>
   </div>
 </footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-<script src="/assets/javascript/index.js"></script>
+<script>
+  $('.save').on("click", function() {
+    alert('clicked');
+    $.post("/api", $(this).closest('p').text());
+  });
+</script>
 
 </body>
 
