@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <title>Mongo Scraper</title>
+  <title>JS News Feed Scraper</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/materia/bootstrap.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
@@ -16,47 +15,45 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">Mongo Scraper</a>
-  <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
-    aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <a class="navbar-brand" href="/">JS News Feed Scraper</a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/saved">Saved Articles
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="btn btn-danger clear">CLEAR ARTICLES!</a>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/saved">Saved Articles
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-danger clear">CLEAR ARTICLES!</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="jumbotron text-center">
+    <div class="overlay">
+    </div>
+    <div class="background-image">
+    </div>
+    <div class="caption">
+      <h1>Saved Articles</h1>
+      <p>Your Saved Articles</p>
+    </div>
   </div>
-</nav>
-<div class="jumbotron text-center">
-  <div class="overlay">
-  </div>
-  <div class="background-image">
-  </div>
-  <div class="caption">
-    <h1>Saved Articles</h1>
-    <p>Your Saved Articles</p>
-  </div>
-</div>
 
 
-
-
-<div class="container-fluid article-container">
+  <div class="container-fluid article-container">
     {{#each articles}}
-    <div data-_id={{id}} class="card">
+    <div data-_id={{id}} class="card article-card">
       <div class="card-header">
         <h3>
           <a class="article-link" target="_blank" rel="noopener noreferrer" href="{{url}}">{{title}}</a>
@@ -68,12 +65,51 @@
     </div>
     {{/each }}
 
-<footer class="footer">
-  <div class="container">
-    <p>New York Times Mongo Scraper</p>
-  </div>
-</footer>
+    <div class="container-fluid article-container no-articles">
+      <div class="alert alert-warning text-center">
+        <h4>Uh Oh. Looks like we don't have any saved articles.</h4>
+      </div>
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Would You Like to Browse Available Articles?</h3>
+        </div>
+        <div class="card-body text-center">
+          <h4>
+            <a href="/">Browse Articles</a>
+          </h4>
+        </div>
+      </div>
+    </div>
 
+    <footer class="footer">
+      <div class="container">
+        <p>JS News Feed Scraper</p>
+      </div>
+    </footer>
+    <script>
+      
+
+      $('.no-articles').hide();
+      hideShowNoArticles();
+      function hideShowNoArticles() {
+        var numCards = $('.article-card').length;
+        console.log(numCards);
+        if (numCards <= 0) {
+          $('.no-articles').show(100);
+        }
+      };
+
+      $('.delete').on("click", function () {
+        $.post("/delete", { id: $(this).parents('.card').first().attr('data-_id') });
+        $(this).closest(".card").remove();
+        hideShowNoArticles();
+      });
+
+      $('.clear').on("click", function() {
+        $.post("/deleteall", "delete");
+        location.reload();
+      });
+    </script>
 </body>
 
 </html>
